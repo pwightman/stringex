@@ -33,15 +33,15 @@ module Stringex
         cattr_accessor :only_when_blank
         cattr_accessor :duplicate_count_separator
 
-        #if options[:sync_url]
-          #before_validation(:ensure_unique_url)
-        #else
-          #if defined?(ActiveModel::Callbacks)
-            #before_validation(:ensure_unique_url, :on => :create)
-          #else
-            #before_validation_on_create(:ensure_unique_url)
-          #end
-        #end
+        if options[:sync_url]
+          before_validation(:ensure_unique_url)
+        else
+          if defined?(ActiveModel::Callbacks)
+            before_validation(:ensure_unique_url, :on => :create)
+          else
+            before_validation_on_create(:ensure_unique_url)
+          end
+        end
 
         self.attribute_to_urlify = attribute
         self.scope_for_url = options[:scope]
@@ -98,7 +98,7 @@ module Stringex
         while url_owners.any?{|owner| owner.send(url_attribute) == "#{base_url}#{separator}#{n}"}
           n = n.succ
         end
-        write_attribute url_attribute, "#{base_url}#{separator}#{n}"
+        write_attribute url_attribute, "#{base_url}#{separator}"
       end
     end
   end
