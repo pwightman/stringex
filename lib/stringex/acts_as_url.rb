@@ -98,7 +98,7 @@ module Stringex
         while url_owners.any?{|owner| owner.send(url_attribute) == "#{base_url}#{separator}#{n}"}
           n = n.succ
         end
-        write_attribute url_attribute, "#{base_url}#{separator}"
+        write_attribute url_attribute, "#{base_url}"
       end
     end
   end
